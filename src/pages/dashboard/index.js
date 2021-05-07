@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
 import Modal from 'react-modal';
+import AccountDetails from '../../components/AccountDetails'
 
 const customStyles = {
     content : {
@@ -14,7 +15,7 @@ const customStyles = {
     }
 };
 
-function Dashboard() {
+function Dashboard(props) {
 
     const [accountKey, setAccountKey] = useState('')
     const [custID, setCustID] = useState('')
@@ -37,30 +38,31 @@ function Dashboard() {
     }
 
     useEffect( async () => {
+        console.log("props", props)
         // FOR TESTING DASHBOARD PAGE ONLY, LOGIN PEOPLE SHOULD PASS AS PROPS
-        const login_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/login'
-        const accounts_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/accounts'
+        // const login_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/login'
+        // const accounts_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/accounts'
         const transaction_view_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/transactions/view'
 
-        const res_login = await axios.post(login_url, {
-            userName: 'Group6',
-            userPass: 'z!80Q&g$aTF983C'
-        }, {headers : {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}})
+        // const res_login = await axios.post(login_url, {
+        //     userName: 'Group6',
+        //     userPass: 'z!80Q&g$aTF983C'
+        // }, {headers : {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}})
 
-        setAccountKey(res_login.data['accountKey'])
-        setCustID(res_login.data['custID'])
-        // console.log("login res" , res_login)
-        // console.log("login res" , res_login.data['accountKey'])
-        // console.log(res_login.data['custID'])
+        // setAccountKey(res_login.data['accountKey'])
+        // setCustID(res_login.data['custID'])
+        // // console.log("login res" , res_login)
+        // // console.log("login res" , res_login.data['accountKey'])
+        // // console.log(res_login.data['custID'])
 
-        const res_account = await axios.post(accounts_url, {
-            custID: 6,
-            accountKey: '48gif4pk-1iw6-gk83-g18a-qatlrut8g1z'
-        }, {headers: {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}});
+        // const res_account = await axios.post(accounts_url, {
+        //     custID: 6,
+        //     accountKey: '48gif4pk-1iw6-gk83-g18a-qatlrut8g1z'
+        // }, {headers: {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}});
 
-        // Set the default / user's selected account type to view transaction history
-        setAccounts(res_account.data[0])
-        console.log("res account", res_account)
+        // // Set the default / user's selected account type to view transaction history
+        // setAccounts(res_account.data[0])
+        // console.log("res account", res_account)
 
         const res_transaction_view = await axios.post(transaction_view_url, {
             custID: 6,
@@ -110,6 +112,7 @@ function Dashboard() {
 
     function renderTransView(item) {
         return (
+            
             <div className="row">
                 <h5>PayeeID: {item['payeeID'].toString()}</h5>
                 <h3><div className="currency">SGD</div>{item['amount']}</h3>
@@ -145,19 +148,44 @@ function Dashboard() {
     }
 
     return (
-
-        <div className="trans-section">
-            <h1>Transaction History</h1>
-
-            <div>
-                {transaction.length > 0 ? sortAndGroupTransByDateTime(transaction) : null}
-                <h3>{transaction.length > 0 ? transaction[0]['datetime'] : ''}</h3>
-                {transaction.length > 0 ? transaction.map((item) =>(renderTransView(item))) : ''}
+        <div>
+            <div className="container">
+                <AccountDetails userList={props.userList}></AccountDetails>
             </div>
-            
+            <div className="trans-section">
+                <h1>Transaction History</h1>
+
+                <div>
+                    {transaction.length > 0 ? sortAndGroupTransByDateTime(transaction) : null}
+                    <h3>{transaction.length > 0 ? transaction[0]['datetime'] : ''}</h3>
+                    {transaction.length > 0 ? transaction.map((item) =>(renderTransView(item))) : ''}
+                </div>
+                
+            </div>
         </div>
+        
 
     )
 }
 
 export default Dashboard;
+// =======
+// import React, { Component } from 'react';
+// import AccountDetails from '../../components/AccountDetails'
+// import './index.css';
+
+// export default class Dashboard extends Component {
+
+//   // componentDidMount() {
+//   //   console.log(this.props)
+//   // }
+//   render() {
+//     return(
+//       <div className="container">
+//         <AccountDetails userList={this.props.userList}></AccountDetails>
+//       </div>
+//     )
+//   }
+
+// }
+// >>>>>>> dashboard-ferne
