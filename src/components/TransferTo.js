@@ -1,7 +1,7 @@
 const TransferTo = ({ setAccountTo }) => {
   return (
-    <div>
-      <h1>To</h1>
+    <div className="transfer-to">
+      <h3>Account to transfer to</h3>
       <input
         type="text"
         placeholder="Enter account number:"
