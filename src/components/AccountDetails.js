@@ -1,26 +1,29 @@
+import { Link } from "react-router-dom";
 import React, { Component } from 'react';
 
 export default class AccountDetails extends Component {
 
   state = {
-    // TEMP
-    login: {
-      "phoneNumber": "(+65) 92364409",
-      "accountKey": "48gif4pk-1iw6-gk83-g18a-qatlrut8g1z",
-      "custID": 6,
-      "lastName": "Elkins",
-      "address": "0910 Hays Cliff\nEast Dustin, CO 00615",
-      "email": "june@hotmail.com",
-      "gender": "Female",
-      "nric": "S5241874B",
-      "firstName": "June",
-      "age": 69
-    },
+    login: [],
     accounts: [],
     accountView: {}
   }
 
   componentDidMount() {
+    this.setState({
+      login: {
+        "phoneNumber": "(+65) 92364409",
+        "accountKey": "48gif4pk-1iw6-gk83-g18a-qatlrut8g1z",
+        "custID": 6,
+        "lastName": "Elkins",
+        "address": "0910 Hays Cliff\nEast Dustin, CO 00615",
+        "email": "june@hotmail.com",
+        "gender": "Female",
+        "nric": "S5241874B",
+        "firstName": "June",
+        "age": 69
+      },
+    })
     this.getUserDetails()
   }
 
@@ -41,40 +44,43 @@ export default class AccountDetails extends Component {
       .then(response => {
         this.setState({
           accounts: response,
-          accountView: response[0]
+          accountView: response[0] || {}
         }, () => console.log(this.state))
       })
       .catch(err => {
+        // err handling
         console.log(err);
       })
   }
 
   handleChange = (e) => {
-    this.setState({ 
-      [e.target.name] : e.target.value,
+    this.setState({
+      [e.target.name]: e.target.value,
       accountView: this.state.accounts.find(account => account.accountNumber == e.target.value)
-    }, () => console.log(this.state))
+    })
   }
 
   render() {
     return (
-      <div className="container">
+      <div>
         <div className="card border">
-          <p>Hi, {this.state.login.firstName}</p>
-          <table>
-            <tbody>
-              {this.state.accounts.map(function (account, i) {
-                return (
-                  <tr key={i}>
-                    <td>Account Number<br></br>{account.accountNumber}</td>
-                    <td>Available Balance<br></br>{account.availableBal}</td>
-                  </tr>)
-              })}
-            </tbody>
-          </table>
+          <h1>Accounts</h1>
+          <h2>Hi, <span className="blue">{this.state.login.firstName}</span></h2>
+          <div className="spread">
+            <div>Account Number</div>
+            <div>Available Balance</div>
+          </div>
+          {this.state.accounts.map(function (account, i) {
+            return (
+              <div className="spread blue" key={i}>
+                <div>{account.accountNumber}</div>
+                <div>{account.availableBal.toFixed(2)}</div>
+              </div>
+            )
+          })}
         </div>
-        <div className="card">
-          <label>Account Type: </label>
+        <div className="spread">
+          <label>My Account Type: </label>
           <select onChange={this.handleChange} name="accountView">
             {this.state.accounts.map(function (account, i) {
               return (
@@ -83,13 +89,20 @@ export default class AccountDetails extends Component {
             })}
           </select>
         </div>
-        <div className="card border">
-          {this.state.accountView.accountName} {this.state.accountView.accountNumber}
-          {this.state.accountView.availableBal}
-          
+        <div className="card border spread">
+          <div>
+            {this.state.accountView.accountName}<br></br>{this.state.accountView.accountNumber}
+          </div>
+          <div>
+            {this.state.accountView.availableBal ? this.state.accountView.availableBal.toFixed(2) : 0.00}
+          </div>
         </div>
-        <div className="card border">
-          <button>Transfer</button>
+        <div className="card border center">
+          <Link
+            to={{
+              pathname: "/dashboard",
+            }}
+          ><button>Transfer</button></Link>
         </div>
       </div>
     )

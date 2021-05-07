@@ -3,11 +3,28 @@ body {
   font-family: Arial;
 }
 
+.container {
+  margin: auto 5rem;
+}
+
+.spread {
+  display: flex;
+  justify-content: space-between;
+}
+
 .card {
-  padding: 10px;
-  margin: 20px;
+  padding: 1em;
+  margin: 1em auto;
 }
 
 .border {
   border: 1px solid black;
+}
+
+.blue {
+  color: blue
+}
+
+.center {
+  text-align: center;
 }
