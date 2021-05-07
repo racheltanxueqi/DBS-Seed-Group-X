@@ -1,19 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
 import Login from './pages/login.js'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './pages/home.js'
+import React, {useState, useEffect} from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
+  const [userDetails, setUserdetails] = useState('');
+  const [accountKey, setAccountkey] = useState('');
   return (
-    <Login />
-    // ===== start react routing here =========
-    // <Router>
-    // <Navbar/>
-    // <Switch>
-    //   <Route path='/' exact component={} />
-    // </Switch>
-    // </Router>
-    // ====================
+    <div>
+      <BrowserRouter>
+        <main className='form-signin'>
+          <Route path='/' exact component={() => <Home userList={userDetails}/>}/>
+          <Route path='/login' exact component={() => <Login setUserdetails={setUserdetails}/>}/>
+        </main>
+      </BrowserRouter>
+    </div>
+   
   );
 }
 

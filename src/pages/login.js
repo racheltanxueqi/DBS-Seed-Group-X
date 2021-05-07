@@ -37,17 +37,9 @@ const Login = (props) => {
         }
 
         const content = await response.json();
-        setUserdetails(content);
-        props.setCustid(content.custID);
-        props.setAccountkey(content.accountKey);
-        
+    
         setRedirect(true);
-        props.setCustid(content.custID);
-        props.setAccountkey(content.accountKey);
-
-        //clear login details
-        setUsername('');
-        setPassword('');
+        props.setUserdetails([`${content.firstName} ${content.lastName}`, content.custID, content.accountKey]);
         
     }
 
