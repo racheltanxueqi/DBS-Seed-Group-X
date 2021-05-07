@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import React, { Component } from 'react';
 
 export default class AccountDetails extends Component {
@@ -10,17 +10,18 @@ export default class AccountDetails extends Component {
   }
 
   componentDidMount() {
-    // console.log("prop",this.props.userList)
-    this.setState({
-      login: {
-        name: this.props.userList[0],
-        custID: this.props.userList[1],
-        accountKey: this.props.userList[2],
-      }
-    }, () => this.getUserDetails())
-    
+    if (this.props.userList) {
+      this.setState({
+        login: {
+          name: this.props.userList[0],
+          custID: this.props.userList[1],
+          accountKey: this.props.userList[2],
+        }
+      }, () => this.getUserDetails())
+    }
   }
 
+  
   getUserDetails() {
     console.log(this.state.login)
     fetch("https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/accounts", {
@@ -57,6 +58,7 @@ export default class AccountDetails extends Component {
 
   render() {
     return (
+      this.props.userList?
       <div>
         <div className="card border">
           <h1>Accounts</h1>
@@ -100,6 +102,7 @@ export default class AccountDetails extends Component {
           ><button>Transfer</button></Link>
         </div>
       </div>
+     : <Redirect to="/"></Redirect>
     )
   }
 
