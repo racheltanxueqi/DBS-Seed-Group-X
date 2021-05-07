@@ -12,7 +12,7 @@ const Login = (props) => {
     const [isError, setIsError] = useState(false);
     const [errorCode, setErrorCode] = useState('');
 
-    const [isFirst, setIsfirst] = useState(true);
+    const [redirect, setRedirect] = useState(false);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -38,16 +38,21 @@ const Login = (props) => {
 
         const content = await response.json();
         setUserdetails(content);
+        props.setCustid(content.custID);
+        props.setAccountkey(content.accountKey);
+        
+        setRedirect(true);
+        props.setCustid(content.custID);
+        props.setAccountkey(content.accountKey);
 
         //clear login details
         setUsername('');
         setPassword('');
-        return (
-            {
-                custID: content.custID,
-                accountKey: content.accountKey
-            }
-        )
+        
+    }
+
+    if (redirect) {
+        return <Redirect to="/"/>;
     }
     return (
         <div>
