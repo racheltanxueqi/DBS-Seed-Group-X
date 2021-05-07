@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
+import Modal from 'react-modal';
+
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+    }
+};
 
 function Dashboard() {
 
@@ -9,6 +21,20 @@ function Dashboard() {
     const [accounts, setAccounts] = useState({})
     const [transaction, setTransaction] = useState([])
     // const [groupedTrans, setGroupedTrans] = useState([])
+
+    var subtitle;
+    const [modalIsOpen,setIsOpen] = React.useState(false);
+    function openModal() {
+      setIsOpen(true);
+    }
+  
+    function afterOpenModal() {
+      subtitle.style.color = 'black';
+    }
+  
+    function closeModal(){
+      setIsOpen(false);
+    }
 
     useEffect( async () => {
         // FOR TESTING DASHBOARD PAGE ONLY, LOGIN PEOPLE SHOULD PASS AS PROPS
@@ -81,26 +107,46 @@ function Dashboard() {
 
     }
 
-    // function getPayeeAccountNumber(payeeID) {
-        
-    // }
 
     function renderTransView(item) {
-        console.log(item)
         return (
             <div className="row">
                 <h5>PayeeID: {item['payeeID'].toString()}</h5>
-                <div>
                 <h3><div className="currency">SGD</div>{item['amount']}</h3>
-                </div>
-                <button>View More</button>
+                <button onClick={openModal}>View More</button>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="description"
+                    >
+                    <h2 ref={_subtitle => (subtitle = _subtitle)}><div className="currency">SGD</div>{item['amount']}</h2>
+                    <h2 ref={_subtitle => (subtitle = _subtitle)}>{item['message']}</h2>
+                    {item['message'] !== "" > 0 ? 
+                        <div className="subtitle">                   
+                            <div className="modal-label">Message</div>
+                            <div>{item['message']}</div>                   
+                        </div>
+
+                    : ""
+                    }
+                    {item['expenseCat'] !== "" > 0 ?
+                        <div className="subtitle">
+                            <div className="modal-label">Category</div>
+                            <div className="modal-subtitle">{item['expenseCat']}</div>
+                        </div> : ""
+                    }
+    
+                    <button onClick={closeModal}>Close</button>
+                </Modal>
             </div>
         )
     }
 
     return (
 
-        <div>
+        <div className="trans-section">
             <h1>Transaction History</h1>
 
             <div>
