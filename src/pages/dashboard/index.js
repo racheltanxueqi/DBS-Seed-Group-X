@@ -4,10 +4,13 @@ import './index.css';
 
 export default class Dashboard extends Component {
 
+  // componentDidMount() {
+  //   console.log(this.props)
+  // }
   render() {
     return(
       <div className="container">
-        <AccountDetails></AccountDetails>
+        <AccountDetails userList={this.props.userList}></AccountDetails>
       </div>
     )
   }

@@ -1,37 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/dashboard'
+import Login from './pages/login.js'
+import Home from './pages/home.js'
+import React, {useState, useEffect} from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 function App() {
+  const [userDetails, setUserdetails] = useState('');
+  const [accountKey, setAccountkey] = useState('');
   return (
-    // --------- To be removed ---------
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    // ---------
-
-    // ===== start react routing here =========
-    <Router>
-    {/* <Navbar/> */}
-    <Switch>
-      <Route path='/dashboard' exact component={Dashboard} />
-    </Switch>
-    </Router>
-    // ====================
+    <div>
+      <BrowserRouter>
+        <main className='form-signin'>
+          <Route path='/' exact component={() => <Home userList={userDetails}/>}/>
+          <Route path='/login' exact component={() => <Login setUserdetails={setUserdetails}/>}/>
+          <Route path='/dashboard' exact component={() => <Dashboard userList={userDetails}/>}/>
+        </main>
+      </BrowserRouter>
+    </div>
+   
   );
 }
 

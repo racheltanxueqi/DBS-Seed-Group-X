@@ -4,30 +4,25 @@ import React, { Component } from 'react';
 export default class AccountDetails extends Component {
 
   state = {
-    login: [],
+    login: {},
     accounts: [],
     accountView: {}
   }
 
   componentDidMount() {
+    // console.log("prop",this.props.userList)
     this.setState({
       login: {
-        "phoneNumber": "(+65) 92364409",
-        "accountKey": "48gif4pk-1iw6-gk83-g18a-qatlrut8g1z",
-        "custID": 6,
-        "lastName": "Elkins",
-        "address": "0910 Hays Cliff\nEast Dustin, CO 00615",
-        "email": "june@hotmail.com",
-        "gender": "Female",
-        "nric": "S5241874B",
-        "firstName": "June",
-        "age": 69
-      },
-    })
-    this.getUserDetails()
+        name: this.props.userList[0],
+        custID: this.props.userList[1],
+        accountKey: this.props.userList[2],
+      }
+    }, () => this.getUserDetails())
+    
   }
 
   getUserDetails() {
+    console.log(this.state.login)
     fetch("https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/accounts", {
       "method": "POST",
       "headers": {
@@ -36,8 +31,8 @@ export default class AccountDetails extends Component {
         "accept": "application/json"
       },
       "body": JSON.stringify({
-        "custID": 6,
-        "accountKey": "48gif4pk-1iw6-gk83-g18a-qatlrut8g1z"
+        "custID": this.state.login.custID,
+        "accountKey": this.state.login.accountKey
       })
     })
       .then(response => response.json())
