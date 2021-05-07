@@ -1,0 +1,15 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 350px;
+    align-items: center;
+    border-top-style: solid;
+    margin-bottom: 10px;
+    border-width: 1px;
+}
+
+.currency {
+    font-size: 12px;
+    color: grey;
+}
