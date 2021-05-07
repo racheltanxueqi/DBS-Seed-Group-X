@@ -49,6 +49,13 @@ export default class AccountDetails extends Component {
       })
   }
 
+  handleChange = (e) => {
+    this.setState({ 
+      [e.target.name] : e.target.value,
+      accountView: this.state.accounts.find(account => account.accountNumber == e.target.value)
+    }, () => console.log(this.state))
+  }
+
   render() {
     return (
       <div className="container">
@@ -67,16 +74,19 @@ export default class AccountDetails extends Component {
           </table>
         </div>
         <div className="card">
-          <form>
-            <label>Account Type: </label>
-            <select>
-              {this.state.accounts.map(function (account, i) {
-                return (
-                  <option key = {i}>{account.accountName}</option>
-                )
-              })}
-            </select>
-          </form>
+          <label>Account Type: </label>
+          <select onChange={this.handleChange} name="accountView">
+            {this.state.accounts.map(function (account, i) {
+              return (
+                <option key={i} value={account.accountNumber}>{account.accountName}</option>
+              )
+            })}
+          </select>
+        </div>
+        <div className="card border">
+          {this.state.accountView.accountName} {this.state.accountView.accountNumber}
+          {this.state.accountView.availableBal}
+          
         </div>
         <div className="card border">
           <button>Transfer</button>
