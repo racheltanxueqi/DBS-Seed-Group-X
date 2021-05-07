@@ -10,40 +10,41 @@ const Login = () => {
     const [isError, setIsError] = useState(false);
     const [errorCode, setErrorCode] = useState('');
 
-    useEffect(() => {
-        fetch(url, { 
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'
-            },
-            body: JSON.stringify({
-                userName: 'Group6',
-                userPass: 'z!80Q&g$aTF983C'
-            })
+    const submit = async (e) => {
+        e.preventDefault();
+
+        const response = await fetch(url, { 
+                    method: 'POST', 
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'
+                    },
+                    body: JSON.stringify({
+                        userName: username,
+                        userPass: password
+                    })
         })
-        //fetch(url + new URLSearchParams({foo:'value', bar: 2}))
-          .then((resp) => {
-            if (resp.status >= 200 && resp.status <= 299) {
-              return resp.json();
-            } else {
-            //   setIsLoading(false);
-              setIsError(true);
-              setErrorCode(resp.status);
-              throw new Error(resp.statusText);
-            }
-          })
-          .then((user) => {
-            //Navigate the API here
-            setUserdetails(user);
-            // setIsLoading(false);
-          })
-          .catch((error) => console.log(error));
-    }, []);
+        if (response.status >= 200 && response.status <= 299) {
+            
+        } else {
+            setIsError(true);
+            setErrorCode(response.status)
+        }
+
+        const content = await response.json();
+        setUserdetails(content);
+
+    }
     return (
         <div>
-            <h1>Customer Details:</h1>
-            <p>{userDetails.accountKey}</p>
+            <form onSubmit={submit}>
+                <input type='text' className='form-control' placeholder="username" onChange={e => setUsername(e.target.value)}/>
+                <input type='password' className='form-control' placeholder='password' onChange={e => setPassword(e.target.value)}/>
+                <button className="btn" type="submit">Login</button>
+            </form>
+            <div>
+                {userDetails.accountKey}
+            </div>
         </div>
     );
 }
