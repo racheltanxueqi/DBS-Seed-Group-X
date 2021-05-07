@@ -13,7 +13,6 @@ function App() {
     <div>
       <BrowserRouter>
         <main className='form-signin'>
-          <Route path='/' exact component={() => <Home userList={userDetails}/>}/>
           <Route path='/login' exact component={() => <Login setUserdetails={setUserdetails}/>}/>
           <Route path='/dashboard' exact component={() => <Dashboard userList={userDetails}/>}/>
         </main>

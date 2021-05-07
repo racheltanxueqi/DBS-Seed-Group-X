@@ -38,31 +38,7 @@ function Dashboard(props) {
     }
 
     useEffect( async () => {
-        console.log("props", props)
-        // FOR TESTING DASHBOARD PAGE ONLY, LOGIN PEOPLE SHOULD PASS AS PROPS
-        // const login_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/login'
-        // const accounts_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/accounts'
         const transaction_view_url = 'https://ipllrj2mq8.execute-api.ap-southeast-1.amazonaws.com/techtrek/transactions/view'
-
-        // const res_login = await axios.post(login_url, {
-        //     userName: 'Group6',
-        //     userPass: 'z!80Q&g$aTF983C'
-        // }, {headers : {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}})
-
-        // setAccountKey(res_login.data['accountKey'])
-        // setCustID(res_login.data['custID'])
-        // // console.log("login res" , res_login)
-        // // console.log("login res" , res_login.data['accountKey'])
-        // // console.log(res_login.data['custID'])
-
-        // const res_account = await axios.post(accounts_url, {
-        //     custID: 6,
-        //     accountKey: '48gif4pk-1iw6-gk83-g18a-qatlrut8g1z'
-        // }, {headers: {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}});
-
-        // // Set the default / user's selected account type to view transaction history
-        // setAccounts(res_account.data[0])
-        // console.log("res account", res_account)
 
         const res_transaction_view = await axios.post(transaction_view_url, {
             custID: 6,
@@ -70,7 +46,6 @@ function Dashboard(props) {
         }, {headers: {'x-api-key': 'QQCQyzK1Qr2DzI1CYF192334KzjSsOq19Bp7g7ZQ'}});
         console.log(res_transaction_view)
         setTransaction(res_transaction_view.data)
-        // console.log("transaction", res_transaction_view.data[0])
     }, []);
 
     function sortAndGroupTransByDateTime(transaction) {
@@ -149,7 +124,7 @@ function Dashboard(props) {
 
     return (
         <div>
-            <div className="container">
+            <div className="container accounts-section">
                 <AccountDetails userList={props.userList}></AccountDetails>
             </div>
             <div className="trans-section">

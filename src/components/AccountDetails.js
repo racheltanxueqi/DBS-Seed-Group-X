@@ -60,16 +60,16 @@ export default class AccountDetails extends Component {
       <div>
         <div className="card border">
           <h1>Accounts</h1>
-          <h2>Hi, <span className="blue">{this.state.login.firstName}</span></h2>
+          <h2>Hi, <span className="blue">{this.state.login.name}!</span></h2>
           <div className="spread">
-            <div>Account Number</div>
-            <div>Available Balance</div>
+            <h3>Account Number</h3>
+            <h3>Available Balance</h3>
           </div>
           {this.state.accounts.map(function (account, i) {
             return (
               <div className="spread blue" key={i}>
-                <div>{account.accountNumber}</div>
-                <div>{account.availableBal.toFixed(2)}</div>
+                <div className="account">{account.accountNumber}</div>
+                <div className="account">{account.availableBal.toFixed(2)}</div>
               </div>
             )
           })}

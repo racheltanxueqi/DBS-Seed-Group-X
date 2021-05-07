@@ -47,38 +47,38 @@ const Login = (props) => {
         return <Redirect to="/dashboard"/>;
     }
     return (
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-4">
                 </div>
-                <div class="col-md-4">
+                <div className="col-md-4">
                 </div>
-                <div class="col-md-4">
+                <div className="col-md-4">
                     <p></p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <img src="https://i.guim.co.uk/img/media/ac01822e1237b350779e9e41ab69c8bcc8d292ea/0_0_6016_4016/master/6016.jpg?width=1300&quality=85&auto=format&fit=max&s=a33f9a1b8c413a1e873a9b78d5e5504b" class="img-fluid" alt="Responsive image"/>
+            <div className="row">
+                <div className="col-md-8">
+                    <img src="https://i.guim.co.uk/img/media/ac01822e1237b350779e9e41ab69c8bcc8d292ea/0_0_6016_4016/master/6016.jpg?width=1300&quality=85&auto=format&fit=max&s=a33f9a1b8c413a1e873a9b78d5e5504b" className="img-fluid" alt="Responsive image"/>
                 </div>
-                <div class="col-md-4">
+                <div className="col-md-4">
                     <form onSubmit={submit}>
                         {/* <input type='text' className='form-control' placeholder="username" onChange={e => setUsername(e.target.value)}/>
                         <input type='password' className='form-control' placeholder='password' onChange={e => setPassword(e.target.value)}/>
                         <button className="btn" type="submit">Login</button> */}
-                        <h1 class="h3 mb-3 fw-normal">Please Sign In</h1>
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="userID" aria-describedby="username" onChange={e => setUsername(e.target.value)}/>
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        <h1 className="h3 mb-3 fw-normal">Please Sign In</h1>
+                        <div className="form-floating">
+                            <input type="text" className="form-control" id="userID" aria-describedby="username" onChange={e => setUsername(e.target.value)}/>
+                            <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                         </div>
-                        <div class="form-floating">
-                            <input type="password" class="form-control" id="userID" aria-describedby="password" onChange={e => setPassword(e.target.value)}/>
+                        <div className="form-floating">
+                            <input type="password" className="form-control" id="userID" aria-describedby="password" onChange={e => setPassword(e.target.value)}/>
                         </div>
-                        <div class="checkbox mb-3">
+                        <div className="checkbox mb-3">
                             <input type="checkbox" value="remember-me"/>
                                 Remember Me
                         </div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Submit</button>
+                        <button type="submit" className="w-100 btn btn-lg btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
